@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G68LR4V7BK"></script>
+  <!-- Google Analytics – Consent Mode v2 (GDPR) — beheerd door cookie.js -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-G68LR4V7BK');
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      wait_for_update: 500
+    });
   </script>
+  <!-- Cookiebanner + GA-activering na toestemming -->
+  <script src="cookie.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casa Bèrnia – Authentieke Stenen Villa · Sierra de Bèrnia, Spanje</title>
@@ -1030,14 +1034,33 @@
       <h2 data-i18n="hike_h2">De Serra de Bèrnia Loop</h2>
       <div class="divider center"></div>
       <div style="margin: 1.5rem auto 2rem; display:flex; justify-content:center;">
-        <iframe
-          src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1313444917560739&show_text=false&width=320"
-          width="320" height="568"
-          style="border:none; overflow:hidden; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.35);"
-          scrolling="no" frameborder="0"
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          allowfullscreen="true">
-        </iframe>
+        <!-- Facebook video: laadt pas na klik (performance + GDPR) -->
+        <div id="fb-video-placeholder"
+             style="width:320px; height:568px; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.35);
+                    background:linear-gradient(135deg,#1a3a2a 0%,#2d5a3a 50%,#1a3a2a 100%);
+                    display:flex; flex-direction:column; align-items:center; justify-content:center;
+                    cursor:pointer; position:relative; overflow:hidden;"
+             onclick="(function(el){
+               var f=document.createElement('iframe');
+               f.src='https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1313444917560739&show_text=false&width=320';
+               f.width=320; f.height=568;
+               f.style.cssText='border:none;overflow:hidden;border-radius:8px;';
+               f.setAttribute('scrolling','no'); f.setAttribute('frameborder','0');
+               f.allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+               f.allowFullscreen=true;
+               el.parentNode.replaceChild(f,el);
+             })(this)">
+          <div style="width:72px;height:72px;background:rgba(255,255,255,0.15);border-radius:50%;
+                      display:flex;align-items:center;justify-content:center;margin-bottom:1rem;
+                      border:2px solid rgba(255,255,255,0.3);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+          <p style="color:rgba(255,255,255,0.9);font-family:'Jost',sans-serif;font-size:0.85rem;
+                    text-align:center;margin:0;padding:0 1.5rem;line-height:1.5;">
+            🎬 Klik om de wandelvideo te laden<br>
+            <span style="font-size:0.75rem;color:rgba(255,255,255,0.6);">(Facebook Reel)</span>
+          </p>
+        </div>
       </div>
       <p class="hiking-desc" data-i18n="hike_p1">
         Een van de mooiste wandelingen van de Costa Blanca begint vrijwel bij uw voordeur. De Serra de Bèrnia Loop is door Lonely Planet geprezen vanwege de dramatische kalkstenen bergkammen, het weidsheid panorama richting Moraira en Benissa en het iconische Fort Bèrnia — een 16e-eeuwse Spaanse vesting hoog boven de Middellandse Zee.
