@@ -154,13 +154,54 @@
       if (localStorage.getItem('cb_social') === '1') loadSocial();
       revoke = document.getElementById('cb-revoke');
       if (revoke) revoke.classList.add('show');
+      pageFix();
     });
   } else {
     // Eerste bezoek — banner tonen
     document.addEventListener('DOMContentLoaded', function () {
       inject();
       setTimeout(show, 700);
+      pageFix();
     });
+  }
+
+  /* ── 7. PAGINA-HERSTEL (als hoofd-JS crasht door afgekapt bestand) ── */
+  function pageFix() {
+    // Footer jaar
+    var fy = document.getElementById('footYear');
+    if (fy && !fy.textContent.trim()) fy.textContent = new Date().getFullYear();
+
+    // .reveal elementen: wacht 400ms — als hoofd-JS werkt zijn ze al zichtbaar
+    setTimeout(function () {
+      var els = document.querySelectorAll('.reveal');
+      var anyVisible = false;
+      els.forEach(function (el) {
+        if (parseFloat(window.getComputedStyle(el).opacity) > 0.1) anyVisible = true;
+      });
+      if (!anyVisible && els.length > 0) {
+        // Hoofd-JS werkt niet → maak alles direct zichtbaar
+        els.forEach(function (el) { el.classList.add('visible'); });
+      }
+    }, 400);
+
+    // Mobile menu (als hoofd-JS niet draait)
+    var burger = document.getElementById('burgerBtn');
+    var mobileNav = document.getElementById('mobileNav');
+    var mobileClose = document.getElementById('mobileNavClose');
+    if (burger && mobileNav && !burger.__cbBound) {
+      burger.__cbBound = true;
+      burger.onclick = function () { mobileNav.classList.add('open'); };
+      if (mobileClose) mobileClose.onclick = function () { mobileNav.classList.remove('open'); };
+    }
+
+    // Nav scroll effect
+    var nav = document.getElementById('mainNav');
+    if (nav && !window.__cbNavBound) {
+      window.__cbNavBound = true;
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      });
+    }
   }
 
 })();
